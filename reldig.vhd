@@ -33,7 +33,9 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity reldig is
     Port ( reloj : in  STD_LOGIC;
            AN : out  STD_LOGIC_VECTOR (3 downto 0);
-           L : out  STD_LOGIC_VECTOR (6 downto 0));
+           L : out  STD_LOGIC_VECTOR (6 downto 0);
+	 alarma: out STD_LOGIC;
+	apagado: out STD_LOGIC);
 end reldig;
 
 architecture Behavioral of reldig is
@@ -188,7 +190,15 @@ begin
 		"1111000" when "0111", --7
 		"0000000" when "1000", --8
 		"0010000" when "1001", --9
-		"1000000" when others; --F
+		"1000000" when others; --F
+	if (Qum ="0000" and Qdm="0000" and Quh="0001" and Qdh="000") then
+		alarma <='1';
+		apagado<='0';
+	end if;
+	
+	if (apagado='1')then
+		alarma<='0';
+	end if;
 
 end Behavioral;
 
